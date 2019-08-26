@@ -1,0 +1,7 @@
+<div class="containerTitoloAttivita">
+        {{attivita.titolo}}
+    </div>
+    <div class="containerDescrizioneAttivita">
+        {{attivita.descrizione}}
+    </div>
+    <button [@sposta]="verificaSpostamento ? 'inizio' : 'fine'" (click)="toggle()">Rimuovi</button>

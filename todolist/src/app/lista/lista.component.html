@@ -1,12 +1,6 @@
 <div class="containerLista">
     <button (click)="aggiungiAttivita()">Aggiungi</button>
     <div *ngFor="let attivita of arrayAttivita" class="containerAttivita">
-        <div class="containerTitoloAttivita">
-            {{attivita.titolo}}
-        </div>
-        <div class="containerDescrizioneAttivita">
-            {{attivita.descrizione}}
-        </div>
-        <button (click)="rimuoviAttivita(attivita)">Rimuovi</button>
+        <app-attivita-dettagli [attivita]="attivita"></app-attivita-dettagli>
     </div>
 </div>
