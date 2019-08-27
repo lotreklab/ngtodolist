@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Lexend+Zetta&display=swap');
+
+.containerTitolo{
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 20px;
+}

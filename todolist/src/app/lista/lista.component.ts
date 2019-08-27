@@ -1,6 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Attivita } from '../Attivita';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { trigger, state, style, animate, transition, group } from '@angular/animations';
+import { getCurrencySymbol } from '@angular/common';
 
 @Component({
   selector: 'app-lista',
@@ -8,20 +9,18 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   styleUrls: ['./lista.component.css'],
   animations: [
     trigger('sposta', [
-      state('inizio', style({
-        marginLeft: '100px'
-      })),
-      state('fine', style({
-        marginLeft: '200px'
-      })),
-      transition('inizio => fine', [
-        animate('0.5s')
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)' }),
+        animate('0.5s ease')
       ]),
-      transition('fine => inizio', [
-        animate('0.5s')
-      ]),
-    ]),
-  ],
+      transition(':leave', [
+        group([
+          animate('0.2s ease', style({ transform: 'translate(100%)' })),
+          animate('0.5s 0.2s ease', style({ opacity: 0 }))
+        ])
+      ])
+    ])
+  ]
 })
 export class ListaComponent implements OnInit {
   arrayAttivita: Attivita[] = [

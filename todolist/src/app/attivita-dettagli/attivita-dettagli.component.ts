@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Attivita } from '../Attivita';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { ListaComponent } from '../lista/lista.component';
 
 
 @Component({
@@ -9,29 +10,31 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   styleUrls: ['./attivita-dettagli.component.css'],
   animations: [
     trigger('sposta', [
-      state('inizio', style({
-        marginLeft: '100px'
-      })),
-      state('fine', style({
-        marginLeft: '200px'
-      })),
-      transition('inizio => fine', [
-        animate('0.5s')
+      transition(':enter', [
+        style({ opacity: '0', marginLeft: '500px' }),
+        animate(500)
       ]),
-      transition('fine => inizio', [
-        animate('0.5s')
-      ]),
+      transition(':leave', [
+        style({ opacity: '1', marginLeft: '500px' }),
+        animate(500)
+      ])
     ]),
-  ],
+  ]
 })
 
 export class AttivitaDettagliComponent implements OnInit {
-  @Input() attivita: Attivita;
+  @Input() attivita : Attivita;
+  @Input() arrayAttivita: Attivita[];
   constructor() { }
   verificaSpostamento = true;
   ngOnInit() {
   }
-  toggle() {
-    this.verificaSpostamento = !this.verificaSpostamento;
+  inizio() {
+    console.log("ciao");
+  }
+  rimuoviDaArray(){
+    var indiceArray;
+    indiceArray = this.arrayAttivita.indexOf(this.attivita);
+    this.arrayAttivita.splice(indiceArray, 1);
   }
 }

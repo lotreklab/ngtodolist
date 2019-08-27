@@ -1,7 +1,9 @@
-<div class="containerTitoloAttivita">
-        {{attivita.titolo}}
+<div class="containerAttivita">
+    <div class="containerTitoloAttivita">
+            {{attivita.titolo}}
     </div>
     <div class="containerDescrizioneAttivita">
-        {{attivita.descrizione}}
+            {{attivita.descrizione}}
     </div>
-    <button [@sposta]="verificaSpostamento ? 'inizio' : 'fine'" (click)="toggle()">Rimuovi</button>
+    <button  (click)="rimuoviDaArray()">Rimuovi</button>
+</div>
