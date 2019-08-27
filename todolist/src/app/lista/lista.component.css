@@ -1,22 +1,16 @@
 .containerLista{
     width: 70%;
-    border-style: solid;
-    border-width: 1px;
     margin: auto;
 }
-.containerTitoloAttivita{
-    margin-left: 10px;
-    margin-top: 10px;
-    color: rgb(69, 79, 102);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-.containerDescrizioneAttivita{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin-left: 20px;
-    margin-bottom: 10px;
-}
-.bottoneAggiungi{
+.containerBottoneAggiungi{
     margin: auto;
-    border: 1px solid black;
     text-align: center;
+}
+#bottoneAggiungi{
+    background-color: #e7e7e7;
+    border: none;
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 16px;
+    padding: 10px 8px;
+    color: black;
 }

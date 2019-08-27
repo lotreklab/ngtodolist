@@ -6,4 +6,19 @@
     margin: auto;
     width: 70%;
     margin-top: 10px;
+    color: black;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 16px;
+}
+.containerTitoloAttivita{
+    margin-left: 10%;
+    margin-top: 2%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.containerDescrizioneAttivita{
+    margin-left: 20%;
+    margin-top: 2%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 20px;
+    margin-bottom: 10px;
 }

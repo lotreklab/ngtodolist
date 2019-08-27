@@ -1,8 +1,8 @@
-<div class="containerLista">
-    <div class="bottoneAggiungi">
-        <button (click)="aggiungiAttivita()">Aggiungi</button>
+<div class="containerLista" [@sposta]="arrayAttivita.length">
+    <div class="containerBottoneAggiungi">
+        <button (click)="aggiungiAttivita()" id="bottoneAggiungi">Aggiungi</button>
     </div>
-    <div *ngFor="let attivita of arrayAttivita" [@sposta]>
+    <div *ngFor="let attivita of arrayAttivita">
         <app-attivita-dettagli [attivita]="attivita" [arrayAttivita]="arrayAttivita"></app-attivita-dettagli>
     </div>
 </div>
