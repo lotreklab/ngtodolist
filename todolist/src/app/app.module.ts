@@ -5,7 +5,7 @@ import { ListaComponent } from './lista/lista.component';
 import { BrowserModule }  from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AttivitaDettagliComponent } from './attivita-dettagli/attivita-dettagli.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop'
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,7 +15,8 @@ import { AttivitaDettagliComponent } from './attivita-dettagli/attivita-dettagli
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

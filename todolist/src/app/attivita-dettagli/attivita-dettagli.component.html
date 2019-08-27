@@ -1,9 +1,11 @@
-<div class="containerAttivita">
+<div class="containerAttivita"  cdkDragBoundary=".containerLista" cdkDragLockAxis="x" cdkDrag>
     <div class="containerTitoloAttivita">
             {{attivita.titolo}}
     </div>
     <div class="containerDescrizioneAttivita">
             {{attivita.descrizione}}
     </div>
-    <button  (click)="rimuoviDaArray()">Rimuovi</button>
+    <div class="containerBottoneRimuovi">
+        <input type="image" src="/assets/img/imgBottone.png" id="bottoneRimuovi" (click)="rimuoviDaArray()">
+    </div>
 </div>
