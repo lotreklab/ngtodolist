@@ -1,0 +1,8 @@
+form  {
+    display: block;
+    flex-direction: column;
+}
+
+form > * {
+    width: 100%;
+}

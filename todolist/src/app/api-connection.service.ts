@@ -34,5 +34,12 @@ export class ApiConnectionService {
     return this.http.delete(apiUrl + "attivita/" + attivita.id + "/", { headers: this.httpHeaders});
   }
 
+  addAttivita(titolo: string, descrizione: string) {
+    return this.http.post(apiUrl + "attivita/", {
+      titolo: titolo,
+      descrizione: descrizione
+    }, { headers: this.httpHeaders});
+  }
+
 
 }

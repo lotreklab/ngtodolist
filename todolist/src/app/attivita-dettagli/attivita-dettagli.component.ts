@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { Attivita } from '../Attivita';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ListaComponent } from '../lista/lista.component';
-import { EventEmitter } from '@angular/core';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -26,7 +26,6 @@ import { EventEmitter } from '@angular/core';
 export class AttivitaDettagliComponent implements OnInit {
   @Input() attivita : Attivita;
   @Input() arrayAttivita: Attivita[];
-  @Output() onRemove = new EventEmitter();
 
   verificaSpostamento = true;
 
@@ -40,6 +39,9 @@ export class AttivitaDettagliComponent implements OnInit {
   }
 
   rimuoviDaArray(){
-    this.onRemove.emit(null);
+  }
+  
+  animazioneDragAttivita(event: CdkDragEnd<string[]>){
+    console.log(event.distance);
   }
 }

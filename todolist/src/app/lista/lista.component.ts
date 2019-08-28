@@ -1,10 +1,11 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Attivita } from '../Attivita';
 import { trigger, state, style, animate, transition, group, query, stagger } from '@angular/animations';
 import { getCurrencySymbol } from '@angular/common';
 import { ApiConnectionService } from '../api-connection.service';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-lista',
@@ -48,12 +49,16 @@ import { Router } from '@angular/router';
 export class ListaComponent implements OnInit {
   alert = new Subject<string>();
 
+  @ViewChild('coso', {static: false}) el:ElementRef;
+  @ViewChild('at', {static: false}) at:ElementRef;
+
   arrayAttivita: Attivita[];
   verificaSpostamento = true;
 
   constructor(
     private apiConnection: ApiConnectionService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit() {
@@ -79,7 +84,11 @@ export class ListaComponent implements OnInit {
     });
   }
 
-  toggle() {
-    this.verificaSpostamento = !this.verificaSpostamento;
+  movimentoAttivita(event : CdkDragRelease<string[]>) {
+    var limiteX = this.el.nativeElement.getBoundingClientRect().left;
+    var attivitaX = this.at.nativeElement.getBoundingClientRect().left;
+    var prova = event.source.element;
+    console.log(event);
+    //console.log(limiteX - (attivitaX + event.distance.x));
   }
 }

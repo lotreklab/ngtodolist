@@ -9,22 +9,25 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AlertComponent } from './alert/alert.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaComponent,
     AttivitaDettagliComponent,
-    LoginComponent,
-    AlertComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgbModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent },
       { path: 'attivita', component: ListaComponent},
@@ -32,7 +35,14 @@ import { AlertComponent } from './alert/alert.component';
       enableTracing: true 
     }),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule,
+    DragDropModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
