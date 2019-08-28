@@ -1,7 +1,3 @@
-.containerLista{
-    width: 70%;
-    margin: auto;
-}
 .containerBottoneAggiungi{
     margin: auto;
     text-align: center;
@@ -16,20 +12,11 @@
     color: black;
 }
 .containerLimiteDragging{
-    border: 1px solid black;
-    margin-top: 10px;
+
 }
 .containerAttivita{
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 20px;
-    margin: auto;
+    margin: 20px auto;
     width: 70%;
-    color: black;
-    font-family: 'Lexend Deca', sans-serif;
-    font-size: 16px;
-    border-color: #8c8c8c;
-    margin-bottom: 10px;
 }
 .containerTitoloAttivita{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
