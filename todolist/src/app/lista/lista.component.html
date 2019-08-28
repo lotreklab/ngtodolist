@@ -2,7 +2,20 @@
     <div class="containerBottoneAggiungi">
         <button (click)="aggiungiAttivita()" id="bottoneAggiungi">Aggiungi</button>
     </div>
-    <div *ngFor="let attivita of arrayAttivita">
-        <app-attivita-dettagli [attivita]="attivita" [arrayAttivita]="arrayAttivita"></app-attivita-dettagli>
+    <div #coso class="containerLimiteDragging" cdkDropList>
+        <div #at class="containerAttivita" *ngFor="let attivita of arrayAttivita | slice:0" 
+        cdkDrag  
+        cdkDragLockAxis="x" 
+        cdkDragBoundary=".containerLimiteDragging"
+        (cdkDragMoved)="movimentoAttivita($event)">
+            <!--<app-attivita-dettagli [attivita]="attivita" [arrayAttivita]="arrayAttivita"></app-attivita-dettagli>-->
+            <div class="containerTitoloAttivita">
+                {{attivita.titolo}}
+            </div>
+            <div class="containerDescrizioneAttivita">
+                {{attivita.descrizione}}
+            </div>
+        </div>
     </div>
+    
 </div>

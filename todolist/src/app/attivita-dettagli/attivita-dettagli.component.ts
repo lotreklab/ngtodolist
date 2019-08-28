@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Attivita } from '../Attivita';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ListaComponent } from '../lista/lista.component';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -36,5 +37,8 @@ export class AttivitaDettagliComponent implements OnInit {
     var indiceArray;
     indiceArray = this.arrayAttivita.indexOf(this.attivita);
     this.arrayAttivita.splice(indiceArray, 1);
+  }
+  animazioneDragAttivita(event: CdkDragEnd<string[]>){
+    console.log(event.distance);
   }
 }

@@ -1,7 +1,8 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Attivita } from '../Attivita';
 import { trigger, state, style, animate, transition, group, query, stagger } from '@angular/animations';
 import { getCurrencySymbol } from '@angular/common';
+import { CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-lista',
@@ -43,12 +44,14 @@ import { getCurrencySymbol } from '@angular/common';
 ]
 })
 export class ListaComponent implements OnInit {
+  @ViewChild('coso', {static: false}) el:ElementRef;
+  @ViewChild('at', {static: false}) at:ElementRef;
   arrayAttivita: Attivita[] = [
     { id: 0, titolo: 'Fare la spesa', descrizione: 'Fai la spesa entro domani'},
     { id: 1, titolo: 'Lavare i panni', descrizione: 'Lava i panni con ammorbidente'}
   ];
   verificaSpostamento = true;
-  constructor() { }
+  constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
   }
@@ -61,7 +64,11 @@ export class ListaComponent implements OnInit {
     indiceArray = this.arrayAttivita.indexOf(attivita);
     this.arrayAttivita.splice(indiceArray, 1);
   }
-  toggle() {
-    this.verificaSpostamento = !this.verificaSpostamento;
+  movimentoAttivita(event : CdkDragRelease<string[]>) {
+    var limiteX = this.el.nativeElement.getBoundingClientRect().left;
+    var attivitaX = this.at.nativeElement.getBoundingClientRect().left;
+    var prova = event.source.element;
+    console.log(event);
+    //console.log(limiteX - (attivitaX + event.distance.x));
   }
 }
