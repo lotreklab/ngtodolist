@@ -5,17 +5,34 @@ import { ListaComponent } from './lista/lista.component';
 import { BrowserModule }  from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AttivitaDettagliComponent } from './attivita-dettagli/attivita-dettagli.component';
+import { LoginComponent } from './login/login.component';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaComponent,
-    AttivitaDettagliComponent
+    AttivitaDettagliComponent,
+    LoginComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    HttpClientModule,
+    NgbModule,
+    RouterModule.forRoot([
+      { path: '', component: LoginComponent },
+      { path: 'attivita', component: ListaComponent},
+    ],{ 
+      enableTracing: true 
+    }),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

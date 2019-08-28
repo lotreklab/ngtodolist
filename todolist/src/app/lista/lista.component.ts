@@ -2,6 +2,9 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 import { Attivita } from '../Attivita';
 import { trigger, state, style, animate, transition, group, query, stagger } from '@angular/animations';
 import { getCurrencySymbol } from '@angular/common';
+import { ApiConnectionService } from '../api-connection.service';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista',
@@ -43,24 +46,39 @@ import { getCurrencySymbol } from '@angular/common';
 ]
 })
 export class ListaComponent implements OnInit {
-  arrayAttivita: Attivita[] = [
-    { id: 0, titolo: 'Fare la spesa', descrizione: 'Fai la spesa entro domani'},
-    { id: 1, titolo: 'Lavare i panni', descrizione: 'Lava i panni con ammorbidente'}
-  ];
+  alert = new Subject<string>();
+
+  arrayAttivita: Attivita[];
   verificaSpostamento = true;
-  constructor() { }
+
+  constructor(
+    private apiConnection: ApiConnectionService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.apiConnection.getList().subscribe((attivita: Attivita[]) => {
+      this.arrayAttivita = attivita;
+    }, 
+    (error: any) => {
+      this.router.navigate(['']);
+    });
   }
 
   aggiungiAttivita(){
-    this.arrayAttivita.push(new Attivita(2, 'hey', 'ey2w'));
+    //this.arrayAttivita.push();
   }
+
   rimuoviAttivita(attivita : Attivita): void{
-    var indiceArray;
-    indiceArray = this.arrayAttivita.indexOf(attivita);
-    this.arrayAttivita.splice(indiceArray, 1);
+    this.apiConnection.removeAttivita(attivita).subscribe( () => {
+      var indiceArray;
+      indiceArray = this.arrayAttivita.indexOf(attivita);
+      this.arrayAttivita.splice(indiceArray, 1);
+    }, (error: any) => {
+      this.alert.next("Si è verificato un errore nel rimuovere l'attività");
+    });
   }
+
   toggle() {
     this.verificaSpostamento = !this.verificaSpostamento;
   }

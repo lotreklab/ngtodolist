@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Attivita } from '../Attivita';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ListaComponent } from '../lista/lista.component';
+import { EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -25,16 +26,20 @@ import { ListaComponent } from '../lista/lista.component';
 export class AttivitaDettagliComponent implements OnInit {
   @Input() attivita : Attivita;
   @Input() arrayAttivita: Attivita[];
-  constructor() { }
+  @Output() onRemove = new EventEmitter();
+
   verificaSpostamento = true;
+
+  constructor() { }
+
   ngOnInit() {
   }
+
   inizio() {
     console.log("ciao");
   }
+
   rimuoviDaArray(){
-    var indiceArray;
-    indiceArray = this.arrayAttivita.indexOf(this.attivita);
-    this.arrayAttivita.splice(indiceArray, 1);
+    this.onRemove.emit(null);
   }
 }
