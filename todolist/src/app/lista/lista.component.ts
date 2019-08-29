@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, ViewChild, ElementRef, Renderer2, NgZone } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewChild, ElementRef, Renderer2, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Attivita } from '../Attivita';
 import { trigger, state, style, animate, transition, group, query, stagger } from '@angular/animations';
 import { getCurrencySymbol } from '@angular/common';
@@ -6,6 +6,7 @@ import { ApiConnectionService } from '../api-connection.service';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 @Component({
   selector: 'app-lista',
@@ -55,7 +56,8 @@ export class ListaComponent implements OnInit {
   constructor(
     private apiConnection: ApiConnectionService,
     private router: Router,
-    private zone: NgZone
+    private zone: NgZone,
+    private changeDetection: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -73,13 +75,12 @@ export class ListaComponent implements OnInit {
 
   rimuoviAttivita(attivita : Attivita): void{
     this.apiConnection.removeAttivita(attivita).subscribe(() => {
-      let indiceArray = this.arrayAttivita.indexOf(attivita);
-      console.log(indiceArray)
-      this.arrayAttivita.splice(indiceArray, 1);
-      console.log(this.arrayAttivita)
+      this.arrayAttivita = this.arrayAttivita.filter((val, index) => {
+        return (val != attivita);
+      });
+      this.changeDetection.detectChanges();
     }, (error: any) => {
       console.log('ERRORE nella CANCELLAZIONE')
-      //this.alert.next("Si è verificato un errore nel rimuovere l'attività");
     });
   }
 
@@ -100,7 +101,7 @@ export class ListaComponent implements OnInit {
     var attivitaSx = event.source.getRootElement().getBoundingClientRect().left;
     var attivitaDx = event.source.getRootElement().getBoundingClientRect().right;
     if(attivitaSx - 10 <= limiteSx)  this.completaAttivita(attivita);
-    else if(attivitaDx + 10 >= limiteDx)  this.rimuoviAttivita(attivita);
+    else if(attivitaDx + 10 >= limiteDx) this.rimuoviAttivita(attivita);
     else event.source._dragRef.reset();
   }
 
