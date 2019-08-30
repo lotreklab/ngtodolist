@@ -1,15 +1,21 @@
-<mat-card>
-    <mat-card-title>Login</mat-card-title>
-    <mat-card-content>
-        <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
-            <mat-form-field>
-                <input matInput id="username" placeholder="Username" type="text" formControlName="username">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput id="password" placeholder="Password" type="password" formControlName="password">
-            </mat-form-field>
-            <button type="submit" mat-raised-button color="primary">Entra</button>
-        </form>
-    </mat-card-content>
-</mat-card>
+<div class="containerTitolo">
+    <h1>TO DO LIST</h1>
+</div>
+<div class="container">
+    <mat-card>
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-content>
+            <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+                <mat-form-field>
+                    <input matInput id="username" placeholder="Username" type="text" formControlName="username">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput id="password" placeholder="Password" type="password" formControlName="password">
+                </mat-form-field>
+                <button type="submit" mat-raised-button color="primary">Entra</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+
 

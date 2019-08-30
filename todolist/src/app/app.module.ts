@@ -4,7 +4,6 @@ import { AppComponent } from './app.component';
 import { ListaComponent } from './lista/lista.component';
 import { BrowserModule }  from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AttivitaDettagliComponent } from './attivita-dettagli/attivita-dettagli.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,11 +12,13 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule, MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
+import { HomeComponent } from './home/home.component';
+import { AttivitaDetailsComponent } from './attivita-details/attivita-details.component';
+import { SidenavService } from './sidenav.service';
 
 
 
@@ -25,16 +26,21 @@ import { MatSelectModule } from '@angular/material/select';
   declarations: [
     AppComponent,
     ListaComponent,
-    AttivitaDettagliComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    AttivitaDetailsComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', component: LoginComponent },
-      { path: 'attivita', component: ListaComponent},
+      { path: '', component: LoginComponent, },
+      { path: 'attivita', component: HomeComponent, children: [
+        { path: '', component: ListaComponent, outlet: 'main'},
+        { path: 'new', component: AttivitaDetailsComponent, outlet: 'details'},
+        { path: 'edit/:attivitaId', component: AttivitaDetailsComponent, outlet: 'details'}
+      ]},
     ],{ 
       enableTracing: true 
     }),
@@ -48,9 +54,12 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatSelectModule
   ],
-  providers: [],
+  providers: [SidenavService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

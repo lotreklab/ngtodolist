@@ -1,17 +1,16 @@
 <div #lista [@animazioniLista]="arrayAttivita?.length">
     <div class="containerBottoneAggiungi">
-        <button (click)="aggiungiAttivita()" id="bottoneAggiungi">Aggiungi</button>
-        <button mat-icon-button matTooltip="Completate: 0&#13;Non completate: 0&#13;Eliminate: 0">
+        <mat-form-field id="campoVisualizzazione">
+            <mat-label>Visualizza attività</mat-label>
+            <mat-select [(value)]="visualizzazioneSelezionata" (selectionChange)="cambiaVisualizzazione($event)">
+                <mat-option value="N">Non completate</mat-option>
+                <mat-option value="C">Completate</mat-option>
+                <mat-option value="R">Rimosse</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button id="bottoneCounter" #counter mat-icon-button [matTooltip]="stringaCounter.value" matTooltipPosition="after">
             <mat-icon>info</mat-icon>
         </button>
-        <mat-form-field>
-            <mat-label>Visualizza attività</mat-label>
-            <select matNativeControl>
-              <option value="N">Non completate</option>
-              <option value="C">Completate</option>
-              <option value="E">Eliminate</option>
-            </select>
-        </mat-form-field>
     </div>
     <div #draglimit class="containerLimiteDragging">
         <mat-card class="containerAttivita" *ngFor="let attivita of arrayAttivita"
@@ -29,3 +28,5 @@
         </mat-card>
     </div>
 </div>
+
+

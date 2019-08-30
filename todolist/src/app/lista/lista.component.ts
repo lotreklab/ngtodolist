@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, ViewChild, ElementRef, Renderer2, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewChild, ElementRef, Renderer2, NgZone, ChangeDetectionStrategy, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { Attivita } from '../Attivita';
 import { trigger, state, style, animate, transition, group, query, stagger } from '@angular/animations';
 import { getCurrencySymbol } from '@angular/common';
@@ -7,6 +7,9 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { MatSelectModule } from '@angular/material';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-lista',
@@ -49,14 +52,19 @@ import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 export class ListaComponent implements OnInit {
   @ViewChild('draglimit', {static: false}) containerBounding:ElementRef;
   @ViewChild('lista', {static: false}) finestraHtml: ElementRef;
+  @ViewChild('counter', {static: false}) counter: ElementRef;
+  @Output() clickEdit = new EventEmitter<Attivita>();
+  public visualizzazioneSelezionata = "N";
+  public stringaCounter;
   arrayAttivita: Attivita[];
+  counters: number[];
   verificaSpostamento = true;
 
   constructor(
     private apiConnection: ApiConnectionService,
     private router: Router,
     private zone: NgZone,
-    private changeDetection: ChangeDetectorRef
+    private changeDetection: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -66,6 +74,10 @@ export class ListaComponent implements OnInit {
     (error: any) => {
       this.router.navigate(['']);
     });
+    this.stringaCounter = new FormControl();
+    this.counters = [0,0,0];
+    this.aggiornaCounters();
+    
   }
 
   aggiungiAttivita(){
@@ -73,22 +85,28 @@ export class ListaComponent implements OnInit {
   }
 
   rimuoviAttivita(attivita : Attivita): void{
-    this.apiConnection.removeAttivita(attivita).subscribe(() => {
+    this.apiConnection.editStatusAttivita(attivita.id, attivita.titolo, attivita.descrizione, "R").subscribe(() => {
       this.arrayAttivita = this.arrayAttivita.filter((val, index) => {
         return (val != attivita);
       });
       this.changeDetection.detectChanges();
     }, (error: any) => {
-      console.log('ERRORE nella CANCELLAZIONE')
+      console.log('ERRORE nel completamento')
     });
-    this.finestraHtml.nativeElement.style.backgroundImage = 'radial-gradient(circle, rgba(255,184,77,1) 50%, rgba(255,255,255,1) 100%);';
+    this.aggiornaCounters();
     this.controllaArray();
   }
 
   completaAttivita(attivita : Attivita): void{
-    var indiceArray;
-    indiceArray = this.arrayAttivita.indexOf(attivita);
-    this.arrayAttivita.splice(indiceArray, 1);
+    this.apiConnection.editStatusAttivita(attivita.id, attivita.titolo, attivita.descrizione, "C").subscribe(() => {
+      this.arrayAttivita = this.arrayAttivita.filter((val, index) => {
+        return (val != attivita);
+      });
+      this.changeDetection.detectChanges();
+    }, (error: any) => {
+      console.log('ERRORE nel completamento')
+    });
+    this.aggiornaCounters();
     this.controllaArray();
   }
   rilascioAttivita(event : CdkDragMove, attivita){
@@ -109,5 +127,25 @@ export class ListaComponent implements OnInit {
   }
   controllaArray(){
     if(this.arrayAttivita.length == 0)  console.log("Nessuna attività da mostrare.");
+  }
+  cambiaVisualizzazione(event){
+    this.apiConnection.getFilteredList(event.value).subscribe((attivita: Attivita[]) =>{ 
+      this.arrayAttivita = attivita;
+    }, 
+    (error: any) => {
+      this.arrayAttivita = null;
+    });
+  }
+  aggiornaCounters(){
+    this.apiConnection.getCounters().subscribe((counters: any) => {
+      this.counters[0] = counters["Non completate"];
+      this.counters[1] = counters["Completate"];
+      this.counters[2] = counters["Rimosse"];
+      this.stringaCounter.value = ("Non completate: " + this.counters[0] + "\nCompletate: " + this.counters[1] + "\nRimosse: " + this.counters[2]);
+    }, 
+    (error: any) => {
+      this.router.navigate(['']);
+    });
+    
   }
 }

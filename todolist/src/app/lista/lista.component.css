@@ -7,16 +7,14 @@
     text-align: center;
     transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
 }
-#bottoneAggiungi{
-    background-color: #e7e7e7;
-    border: none;
-    font-family: 'Lexend Zetta', sans-serif;
-    font-size: 16px;
-    padding: 10px 8px;
-    color: black;
-}
 .containerLimiteDragging{
     margin-top: 10px;
+}
+#bottoneCounter{
+    margin-left: 20%;
+}
+#campoVisualizzazione{
+    margin-right: 20%px;
 }
 .containerAttivita{
     border-style: solid;
@@ -31,14 +29,6 @@
     margin-bottom: 10px;
     margin-top: 10px;
 }
-.containerTitoloAttivita{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin-top: 10px;
-}
-.containerDescrizioneAttivita{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin-bottom: 10px;
-}
 .containerAttivita:active {
     box-sizing: border-box;
     border-radius: 20px;
@@ -47,7 +37,7 @@
                 0 3px 14px 2px rgba(0, 0, 0, 0.12);
     
 }
-/deep/ .mat-tooltip {
+::ng-deep .mat-tooltip {
     font-size: 14px;
     white-space: pre-line;
 }

@@ -1,0 +1,27 @@
+<div id="stuffContainer">
+    <mat-drawer-container fxFlex hasBackdrop="false" >
+        <mat-drawer #drawer mode="side" position="end">
+            <mat-toolbar color="primary">
+                <button mat-icon-button color="white" (click)="drawer.toggle()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-toolbar>
+            <div id="navbarContent">
+                <app-attivita-details #details 
+                (new)="lista.aggiungiAttivita($event)"
+                (edit)="lista.modificaAttivita($event);closeNav();" ></app-attivita-details>
+            </div>
+        </mat-drawer>
+        <mat-drawer-content>
+            <div class="containerTitolo">
+                <h1>TO DO LIST</h1>
+            </div>
+            <app-lista #lista (clickEdit)="details.initEdit($event);openNav();"></app-lista>
+            <button mat-fab color="primary" (click)="openNav();details.initNew();" id="addButton" >
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>
+
+
