@@ -1,33 +1,19 @@
-import { Component, OnInit, HostBinding, ViewChild, ElementRef, Renderer2, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewChild, ElementRef, Renderer2, NgZone, ChangeDetectionStrategy, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { Attivita } from '../Attivita';
 import { trigger, state, style, animate, transition, group, query, stagger } from '@angular/animations';
 import { getCurrencySymbol } from '@angular/common';
 import { ApiConnectionService } from '../api-connection.service';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatSidenav } from '@angular/material/sidenav';
 import { CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { SidenavService } from '../sidenav.service';
 
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
   styleUrls: ['./lista.component.css'],
-  /*
-  animations: [
-    trigger('sposta', [
-      transition(':enter', [
-        style({ transform: 'translateX(-100%)' }),
-        animate('0.5s ease')
-      ]),
-      transition(':leave', [
-        group([
-          animate('0.2s ease', style({ transform: 'translate(100%)' })),
-          animate('0.5s 0.2s ease', style({ opacity: 0 }))
-        ])
-      ])
-    ])
-  ]
-  */
   animations: [
     trigger('sposta', [
       transition('* => *', [
@@ -47,17 +33,17 @@ import { ValueConverter } from '@angular/compiler/src/render3/view/template';
   ]
 })
 export class ListaComponent implements OnInit {
-  @ViewChild('coso', {static: false}) containerBounding:ElementRef;
-  @ViewChild('at', {static: false}) at:ElementRef;
+  @ViewChild('coso', {static: false}) containerBounding: ElementRef;
+
+  @Output() clickEdit = new EventEmitter<Attivita>();
 
   arrayAttivita: Attivita[];
-  verificaSpostamento = true;
 
   constructor(
     private apiConnection: ApiConnectionService,
     private router: Router,
-    private zone: NgZone,
-    private changeDetection: ChangeDetectorRef
+    private changeDetection: ChangeDetectorRef,
+    private sidenav: SidenavService
   ) { }
 
   ngOnInit() {
@@ -69,19 +55,31 @@ export class ListaComponent implements OnInit {
     });
   }
 
-  aggiungiAttivita(){
-    //this.arrayAttivita.push();
+  aggiungiAttivita(attivita: Attivita){
+    this.arrayAttivita.unshift(attivita);
+  }
+
+  modificaAttivita(attivita: Attivita) {
+    this.arrayAttivita.forEach((value, index) => {
+      if (value.id == attivita.id) {
+         this.arrayAttivita[index] = attivita;
+      }
+    })
   }
 
   rimuoviAttivita(attivita : Attivita): void{
     this.apiConnection.removeAttivita(attivita).subscribe(() => {
-      this.arrayAttivita = this.arrayAttivita.filter((val, index) => {
-        return (val != attivita);
+      this.arrayAttivita = this.arrayAttivita.filter((val) => {
+        return val != attivita;
       });
       this.changeDetection.detectChanges();
     }, (error: any) => {
       console.log('ERRORE nella CANCELLAZIONE')
     });
+  }
+
+  apriModificaAttivita(attivita: Attivita) {
+    this.clickEdit.emit(attivita);
   }
 
   completaAttivita(attivita : Attivita): void{
@@ -90,10 +88,6 @@ export class ListaComponent implements OnInit {
     this.arrayAttivita.splice(indiceArray, 1);
   }
 
-  movimentoAttivita(event) {
-    var limiteX = this.containerBounding.nativeElement.getBoundingClientRect().left;
-    var attivitaX = this.at.nativeElement.getBoundingClientRect().left;
-  }
 
   rilascioAttivita(event, attivita){
     var limiteSx = this.containerBounding.nativeElement.getBoundingClientRect().left;
@@ -108,4 +102,9 @@ export class ListaComponent implements OnInit {
   coloraSfondo(event){
     
   }
+
+  toggleSidenav() {
+    this.sidenav.toggle();
+  }
+
 }

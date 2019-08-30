@@ -1,14 +1,11 @@
 <div [@sposta]="arrayAttivita?.length">
-    <div class="containerBottoneAggiungi">
-        <button (click)="aggiungiAttivita()" id="bottoneAggiungi">Aggiungi</button>
-    </div>
     <div #coso class="containerLimiteDragging">
         <mat-card #at class="containerAttivita" *ngFor="let attivita of arrayAttivita"
         cdkDrag  
         cdkDragLockAxis="x" 
         cdkDragBoundary=".containerLimiteDragging"
         (cdkDragReleased)="rilascioAttivita($event, attivita)"
-        (cdkDragMoved)="coloraSfondo($event)">
+        (cdkDragMoved)="coloraSfondo($event)" (click)="apriModificaAttivita(attivita)">
             <mat-card-title class="containerTitoloAttivita">
                 {{attivita.titolo}}
             </mat-card-title>
@@ -18,3 +15,5 @@
         </mat-card>
     </div>
 </div>
+
+

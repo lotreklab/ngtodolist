@@ -1,0 +1,12 @@
+<h2 *ngIf="!isEditing">Nuova attività</h2>
+<h2 *ngIf="isEditing">Modifica attività</h2>
+<form [formGroup]="dataForm">
+    <mat-form-field>
+        <input matInput placeholder="Titolo" formControlName="titolo">
+    </mat-form-field>
+    <mat-form-field>
+        <textarea matInput placeholder="Descrizione" formControlName="descrizione"></textarea>
+    </mat-form-field>
+    <button mat-raised-button *ngIf="!isEditing" color="primary" type="submit" (click)="newAttivita()">Registra</button>
+    <button mat-raised-button *ngIf="isEditing" color="primary" type="submit" (click)="editAttivita()">Modifica</button>
+</form>

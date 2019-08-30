@@ -1,0 +1,25 @@
+mat-drawer-container {
+    background-color: white;
+    height: 100%;
+}
+
+
+#addButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+#stuffContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#navbarContent {
+    padding: 30px;
+    max-width: 350px;
+}

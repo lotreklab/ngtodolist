@@ -4,7 +4,6 @@ import { AppComponent } from './app.component';
 import { ListaComponent } from './lista/lista.component';
 import { BrowserModule }  from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AttivitaDettagliComponent } from './attivita-dettagli/attivita-dettagli.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,24 +12,32 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule, MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
+import { AttivitaDetailsComponent } from './attivita-details/attivita-details.component';
+import { SidenavService } from './sidenav.service';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaComponent,
-    AttivitaDettagliComponent,
-    LoginComponent
+    LoginComponent,
+    AttivitaDetailsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', component: LoginComponent },
-      { path: 'attivita', component: ListaComponent},
+      { path: '', component: LoginComponent, },
+      { path: 'attivita', component: HomeComponent, children: [
+        { path: '', component: ListaComponent, outlet: 'main'},
+        { path: 'new', component: AttivitaDetailsComponent, outlet: 'details'},
+        { path: 'edit/:attivitaId', component: AttivitaDetailsComponent, outlet: 'details'}
+      ]},
     ],{ 
       enableTracing: true 
     }),
@@ -42,9 +49,12 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule
   ],
-  providers: [],
+  providers: [SidenavService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

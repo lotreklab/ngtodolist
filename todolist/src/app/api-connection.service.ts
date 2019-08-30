@@ -35,11 +35,18 @@ export class ApiConnectionService {
   }
 
   addAttivita(titolo: string, descrizione: string) {
-    return this.http.post(apiUrl + "attivita/", {
+    return this.http.post<Attivita>(apiUrl + "attivita/", {
       titolo: titolo,
       descrizione: descrizione
     }, { headers: this.httpHeaders});
   }
 
+  getAttivita(id: number) {
+    return this.http.get<Attivita>(apiUrl + "attivita/" + id + "/", { headers: this.httpHeaders});
+  }
+
+  editAttivita(id: number, titolo: string, descrizione: string) {
+    return this.http.put<Attivita>(apiUrl + "attivita/" + id + "/", {id: id, titolo: titolo, descrizione: descrizione}, { headers: this.httpHeaders});
+  }
 
 }
