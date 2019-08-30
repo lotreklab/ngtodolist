@@ -1,11 +1,24 @@
-<div [@sposta]="arrayAttivita?.length">
-    <div #coso class="containerLimiteDragging">
-        <mat-card #at class="containerAttivita" *ngFor="let attivita of arrayAttivita"
+<div #lista [@animazioniLista]="arrayAttivita?.length">
+    <div class="containerBottoneAggiungi">
+        <mat-form-field id="campoVisualizzazione">
+            <mat-label>Visualizza attività</mat-label>
+            <mat-select [(value)]="visualizzazioneSelezionata" (selectionChange)="cambiaVisualizzazione($event)">
+                <mat-option value="N">Non completate</mat-option>
+                <mat-option value="C">Completate</mat-option>
+                <mat-option value="R">Rimosse</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button id="bottoneCounter" #counter mat-icon-button [matTooltip]="stringaCounter.value" matTooltipPosition="after">
+            <mat-icon>info</mat-icon>
+        </button>
+    </div>
+    <div #draglimit class="containerLimiteDragging">
+        <mat-card class="containerAttivita" *ngFor="let attivita of arrayAttivita"
         cdkDrag  
         cdkDragLockAxis="x" 
         cdkDragBoundary=".containerLimiteDragging"
         (cdkDragReleased)="rilascioAttivita($event, attivita)"
-        (cdkDragMoved)="coloraSfondo($event)" (click)="apriModificaAttivita(attivita)">
+        (cdkDragMoved)="coloraSfondo($event)">
             <mat-card-title class="containerTitoloAttivita">
                 {{attivita.titolo}}
             </mat-card-title>

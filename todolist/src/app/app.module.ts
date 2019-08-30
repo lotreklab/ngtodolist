@@ -14,9 +14,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule, MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+import { HomeComponent } from './home/home.component';
 import { AttivitaDetailsComponent } from './attivita-details/attivita-details.component';
 import { SidenavService } from './sidenav.service';
-import { HomeComponent } from './home/home.component';
+
 
 
 @NgModule({
@@ -24,8 +27,8 @@ import { HomeComponent } from './home/home.component';
     AppComponent,
     ListaComponent,
     LoginComponent,
-    AttivitaDetailsComponent,
-    HomeComponent
+    HomeComponent,
+    AttivitaDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +54,10 @@ import { HomeComponent } from './home/home.component';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatTooltipModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule
   ],
   providers: [SidenavService],
   bootstrap: [AppComponent]

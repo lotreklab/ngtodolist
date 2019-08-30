@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Attivita } from './Attivita';
 
 const apiUrl = "http://192.168.1.134:8000/";
@@ -30,6 +30,11 @@ export class ApiConnectionService {
     return this.http.get<Attivita[]>(apiUrl + "attivita/", { headers: this.httpHeaders});
   }
 
+  getFilteredList(filtro: string){
+    let params = new HttpParams().set("status", filtro);
+    return this.http.get<Attivita[]>(apiUrl + "attivita/", { headers: this.httpHeaders, params: params});
+  }
+
   removeAttivita(attivita: Attivita) {
     return this.http.delete(apiUrl + "attivita/" + attivita.id + "/", { headers: this.httpHeaders});
   }
@@ -49,4 +54,11 @@ export class ApiConnectionService {
     return this.http.put<Attivita>(apiUrl + "attivita/" + id + "/", {id: id, titolo: titolo, descrizione: descrizione}, { headers: this.httpHeaders});
   }
 
+  editStatusAttivita(id: number, titolo: string, descrizione: string, status: string){
+    return this.http.put<Attivita>(apiUrl + "attivita/" + id + "/", {id: id, titolo: titolo, descrizione: descrizione, status: status}, { headers: this.httpHeaders});
+  }
+
+  getCounters(){
+    return this.http.get<string[]>(apiUrl + "attivita/get_counters", { headers: this.httpHeaders});
+  }
 }
