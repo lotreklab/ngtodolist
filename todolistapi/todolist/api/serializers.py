@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class AttivitaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Attivita
-        fields = ['id', 'titolo', 'descrizione', 'utente']
+        fields = ['id', 'titolo', 'descrizione', 'utente', 'status']
         read_only_fields = ['utente']
 
 class UtenteSerializer(serializers.HyperlinkedModelSerializer):
