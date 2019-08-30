@@ -1,9 +1,20 @@
-<div [@sposta]="arrayAttivita?.length">
+<div #lista [@animazioniLista]="arrayAttivita?.length">
     <div class="containerBottoneAggiungi">
         <button (click)="aggiungiAttivita()" id="bottoneAggiungi">Aggiungi</button>
+        <button mat-icon-button matTooltip="Completate: 0&#13;Non completate: 0&#13;Eliminate: 0">
+            <mat-icon>info</mat-icon>
+        </button>
+        <mat-form-field>
+            <mat-label>Visualizza attività</mat-label>
+            <select matNativeControl>
+              <option value="N">Non completate</option>
+              <option value="C">Completate</option>
+              <option value="E">Eliminate</option>
+            </select>
+        </mat-form-field>
     </div>
-    <div #coso class="containerLimiteDragging">
-        <mat-card #at class="containerAttivita" *ngFor="let attivita of arrayAttivita"
+    <div #draglimit class="containerLimiteDragging">
+        <mat-card class="containerAttivita" *ngFor="let attivita of arrayAttivita"
         cdkDrag  
         cdkDragLockAxis="x" 
         cdkDragBoundary=".containerLimiteDragging"

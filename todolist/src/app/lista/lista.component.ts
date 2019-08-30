@@ -29,11 +29,11 @@ import { ValueConverter } from '@angular/compiler/src/render3/view/template';
   ]
   */
   animations: [
-    trigger('sposta', [
+    trigger('animazioniLista', [
       transition('* => *', [
         query(':leave', [
           group([
-            animate('0.5s 0.2s ease', style({ opacity: 0 }))
+            animate('0.4s', style({ opacity: 0 }))
           ])
         ], { optional: true }),
         query(':enter', [
@@ -47,9 +47,8 @@ import { ValueConverter } from '@angular/compiler/src/render3/view/template';
   ]
 })
 export class ListaComponent implements OnInit {
-  @ViewChild('coso', {static: false}) containerBounding:ElementRef;
-  @ViewChild('at', {static: false}) at:ElementRef;
-
+  @ViewChild('draglimit', {static: false}) containerBounding:ElementRef;
+  @ViewChild('lista', {static: false}) finestraHtml: ElementRef;
   arrayAttivita: Attivita[];
   verificaSpostamento = true;
 
@@ -82,30 +81,33 @@ export class ListaComponent implements OnInit {
     }, (error: any) => {
       console.log('ERRORE nella CANCELLAZIONE')
     });
+    this.finestraHtml.nativeElement.style.backgroundImage = 'radial-gradient(circle, rgba(255,184,77,1) 50%, rgba(255,255,255,1) 100%);';
+    this.controllaArray();
   }
 
   completaAttivita(attivita : Attivita): void{
     var indiceArray;
     indiceArray = this.arrayAttivita.indexOf(attivita);
     this.arrayAttivita.splice(indiceArray, 1);
+    this.controllaArray();
   }
-
-  movimentoAttivita(event) {
-    var limiteX = this.containerBounding.nativeElement.getBoundingClientRect().left;
-    var attivitaX = this.at.nativeElement.getBoundingClientRect().left;
-  }
-
-  rilascioAttivita(event, attivita){
+  rilascioAttivita(event : CdkDragMove, attivita){
     var limiteSx = this.containerBounding.nativeElement.getBoundingClientRect().left;
     var limiteDx = this.containerBounding.nativeElement.getBoundingClientRect().right;
     var attivitaSx = event.source.getRootElement().getBoundingClientRect().left;
     var attivitaDx = event.source.getRootElement().getBoundingClientRect().right;
     if(attivitaSx - 10 <= limiteSx)  this.completaAttivita(attivita);
     else if(attivitaDx + 10 >= limiteDx) this.rimuoviAttivita(attivita);
-    else event.source._dragRef.reset();
+    else {
+      event.source.getRootElement().style.backgroundImage = 'linear-gradient(-90deg, white, white)';
+      event.source._dragRef.reset();
+    }
   }
-
-  coloraSfondo(event){
-    
+  coloraSfondo(event : CdkDragMove){
+    if(event.delta.x == 1)  event.source.getRootElement().style.backgroundImage = 'linear-gradient(-90deg, ' + ('rgb(255, ' + (255 - event.distance.x) + ', ' + (255 - event.distance.x) + ')').toString() + ', white, white, white)';
+    else if(event.delta.x == -1) event.source.getRootElement().style.backgroundImage = 'linear-gradient(-90deg, white, white, white, ' + ('rgb(' + (255 + event.distance.x ) + ', 255, ' + (255 + event.distance.x) + ')').toString() + ')';
+  }
+  controllaArray(){
+    if(this.arrayAttivita.length == 0)  console.log("Nessuna attività da mostrare.");
   }
 }
