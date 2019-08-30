@@ -14,17 +14,21 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule, MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
-import { AttivitaDetailsComponent } from './attivita-details/attivita-details.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 import { HomeComponent } from './home/home.component';
+import { AttivitaDetailsComponent } from './attivita-details/attivita-details.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaComponent,
     LoginComponent,
-    AttivitaDetailsComponent,
-    HomeComponent
+    HomeComponent,
+    AttivitaDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +50,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatTooltipModule,
     MatSidenavModule,
     MatToolbarModule,
     MatCheckboxModule

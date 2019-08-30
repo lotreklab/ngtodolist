@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Lexend+Zetta&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap');
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
-*:focus {
-    outline: none !important;
+button:focus{
+    outline: 0;
 }
