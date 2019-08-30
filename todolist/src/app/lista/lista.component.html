@@ -5,7 +5,10 @@
         cdkDragLockAxis="x" 
         cdkDragBoundary=".containerLimiteDragging"
         (cdkDragReleased)="rilascioAttivita($event, attivita)"
-        (cdkDragMoved)="coloraSfondo($event)" (click)="apriModificaAttivita(attivita)">
+        (cdkDragMoved)="coloraSfondo($event)" >
+            <button mat-icon-button color="primary" class="editButton" (click)="apriModificaAttivita(attivita)">
+                <mat-icon>edit</mat-icon>
+            </button>
             <mat-card-title class="containerTitoloAttivita">
                 {{attivita.titolo}}
             </mat-card-title>

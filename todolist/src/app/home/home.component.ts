@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { SidenavService } from '../sidenav.service';
 import { MatSidenav, MatDrawer } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -8,11 +7,10 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements AfterViewInit{
+export class HomeComponent {
   @ViewChild('drawer', { static: false }) public sidenav: MatDrawer;
 
   constructor(
-    private sidenavService: SidenavService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -23,9 +21,5 @@ export class HomeComponent implements AfterViewInit{
 
   closeNav() {
     this.sidenav.close();
-  }
-
-  ngAfterViewInit() {
-    this.sidenavService.setSidenav(this.sidenav);
   }
 }

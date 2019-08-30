@@ -6,3 +6,10 @@ form  {
 form > * {
     width: 100%;
 }
+
+#registerCheckbox {
+    line-height: 40px;
+    font-size: 10pt;
+    float: right;
+
+}

@@ -14,6 +14,7 @@ import { MatSnackBar } from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
+  registerBoolean = false;
   loginForm;
 
   constructor(
@@ -32,12 +33,32 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginData) {
-    this.apiConnection.setLoginData(loginData.username, loginData.password);
-    this.apiConnection.testLogin().subscribe( () => { 
+    if (this.registerBoolean) {
+      this.register(loginData);
+      return;
+    }
+    this.apiConnection.testLogin(loginData.username, loginData.password).subscribe((token: any) => { 
+      this.apiConnection.setToken(token.token);
       this.router.navigate(['attivita']);
     }, (error: Response) => {
       if (error.status == 403) {
         this.snackBar.open("Username o password errati.", null, {
+          duration: 5000
+        });
+      }
+    });
+  }
+
+  register(loginData) {
+    this.apiConnection.addUtente(loginData.username, loginData.password).subscribe({
+      complete: () => {
+        this.apiConnection.testLogin(loginData.username, loginData.password).subscribe((token: any) => { 
+          this.apiConnection.setToken(token.token);
+          this.router.navigate(['attivita']);
+        })
+      }, 
+      error: (error: any) => {
+        this.snackBar.open("Esiste già un utente con lo stesso username", null, {
           duration: 5000
         });
       }

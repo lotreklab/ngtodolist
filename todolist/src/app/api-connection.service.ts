@@ -18,12 +18,12 @@ export class ApiConnectionService {
     })
   }
 
-  setLoginData(username: String, password: String) {
-    this.httpHeaders = this.httpHeaders.delete('Authorization').append('Authorization', 'Basic ' + btoa(username + ':' + password));
+  testLogin(username: String, password: String) {
+    return this.http.post(apiUrl + "api-token-auth/", {username: username, password: password});
   }
 
-  testLogin() {
-    return this.http.options(apiUrl + "attivita/", {headers: this.httpHeaders});
+  setToken(token) {
+    this.httpHeaders = this.httpHeaders.delete('Authorization').append('Authorization', 'Token ' + token);
   }
 
   getList() {
@@ -47,6 +47,10 @@ export class ApiConnectionService {
 
   editAttivita(id: number, titolo: string, descrizione: string) {
     return this.http.put<Attivita>(apiUrl + "attivita/" + id + "/", {id: id, titolo: titolo, descrizione: descrizione}, { headers: this.httpHeaders});
+  }
+
+  addUtente(username: string, password: string) {
+    return this.http.post<Attivita>(apiUrl + "utente/", { username: username, password: password}, { headers: this.httpHeaders });
   }
 
 }

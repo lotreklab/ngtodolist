@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { SidenavService } from '../sidenav.service';
 
 @Component({
   selector: 'app-lista',
@@ -42,8 +41,7 @@ export class ListaComponent implements OnInit {
   constructor(
     private apiConnection: ApiConnectionService,
     private router: Router,
-    private changeDetection: ChangeDetectorRef,
-    private sidenav: SidenavService
+    private changeDetection: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -101,10 +99,6 @@ export class ListaComponent implements OnInit {
 
   coloraSfondo(event){
     
-  }
-
-  toggleSidenav() {
-    this.sidenav.toggle();
   }
 
 }

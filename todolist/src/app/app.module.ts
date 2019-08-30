@@ -15,9 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule, MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { AttivitaDetailsComponent } from './attivita-details/attivita-details.component';
-import { SidenavService } from './sidenav.service';
 import { HomeComponent } from './home/home.component';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -32,12 +31,8 @@ import { HomeComponent } from './home/home.component';
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', component: LoginComponent, },
-      { path: 'attivita', component: HomeComponent, children: [
-        { path: '', component: ListaComponent, outlet: 'main'},
-        { path: 'new', component: AttivitaDetailsComponent, outlet: 'details'},
-        { path: 'edit/:attivitaId', component: AttivitaDetailsComponent, outlet: 'details'}
-      ]},
+      { path: '', component: LoginComponent },
+      { path: 'attivita', component: HomeComponent },
     ],{ 
       enableTracing: true 
     }),
@@ -52,9 +47,10 @@ import { HomeComponent } from './home/home.component';
     MatButtonModule,
     MatIconModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCheckboxModule
   ],
-  providers: [SidenavService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
