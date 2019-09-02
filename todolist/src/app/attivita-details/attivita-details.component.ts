@@ -33,6 +33,7 @@ export class AttivitaDetailsComponent implements OnInit{
       titolo: '',
       descrizione: ''
     });
+    this.isEditing = false;
   }
 
   initEdit(attivita: Attivita) {
