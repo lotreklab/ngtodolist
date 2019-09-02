@@ -7,6 +7,11 @@ form > * {
     width: 100%;
 }
 
+mat-card {
+    max-width: 400px;
+    margin: auto;
+}
+
 #registerCheckbox {
     line-height: 40px;
     font-size: 10pt;

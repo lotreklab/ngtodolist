@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Attivita } from './Attivita';
 
-const apiUrl = "http://192.168.1.134:8000/";
+const apiUrl = "http://127.0.0.1:8000/";
 
 @Injectable({
   providedIn: 'root'

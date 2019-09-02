@@ -41,11 +41,9 @@ export class LoginComponent implements OnInit {
       this.apiConnection.setToken(token.token);
       this.router.navigate(['attivita']);
     }, (error: Response) => {
-      if (error.status == 403) {
-        this.snackBar.open("Username o password errati.", null, {
-          duration: 5000
-        });
-      }
+      this.snackBar.open("Username o password errati.", null, {
+        duration: 5000
+      });
     });
   }
 

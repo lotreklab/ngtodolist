@@ -54,6 +54,7 @@ export class ListaComponent implements OnInit {
   @ViewChild('lista', {static: false}) finestraHtml: ElementRef;
   @ViewChild('counter', {static: false}) counter: ElementRef;
   @Output() clickEdit = new EventEmitter<Attivita>();
+
   public visualizzazioneSelezionata = "N";
   public stringaCounter;
   arrayAttivita: Attivita[];
@@ -67,20 +68,27 @@ export class ListaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.apiConnection.getList().subscribe((attivita: Attivita[]) => {
+    this.apiConnection.getFilteredList('N').subscribe((attivita: Attivita[]) => {
       this.arrayAttivita = attivita;
-    }, 
-    (error: any) => {
+    }, (error: any) => {
       this.router.navigate(['']);
     });
+
     this.stringaCounter = new FormControl();
     this.counters = [0,0,0];
     this.aggiornaCounters();
-    
   }
 
-  aggiungiAttivita(){
-    //this.arrayAttivita.push();
+  aggiungiAttivita(attivita: Attivita){
+    this.arrayAttivita.unshift(attivita);
+  }
+
+  modificaAttivita(attivita: Attivita) {
+    this.arrayAttivita.forEach((value, index) => {
+      if (value.id == attivita.id) {
+         this.arrayAttivita[index] = attivita;
+      }
+    })
   }
 
   rimuoviAttivita(attivita : Attivita): void{
@@ -108,6 +116,7 @@ export class ListaComponent implements OnInit {
     this.aggiornaCounters();
     this.controllaArray();
   }
+
   rilascioAttivita(event : CdkDragMove, attivita){
     var limiteSx = this.containerBounding.nativeElement.getBoundingClientRect().left;
     var limiteDx = this.containerBounding.nativeElement.getBoundingClientRect().right;
@@ -120,6 +129,7 @@ export class ListaComponent implements OnInit {
       event.source._dragRef.reset();
     }
   }
+
   coloraSfondo(event : CdkDragMove){
     if(event.delta.x == 1)  event.source.getRootElement().style.backgroundImage = 'linear-gradient(-90deg, ' + ('rgb(255, ' + (255 - event.distance.x) + ', ' + (255 - event.distance.x) + ')').toString() + ', white, white, white)';
     else if(event.delta.x == -1) event.source.getRootElement().style.backgroundImage = 'linear-gradient(-90deg, white, white, white, ' + ('rgb(' + (255 + event.distance.x ) + ', 255, ' + (255 + event.distance.x) + ')').toString() + ')';
@@ -128,6 +138,7 @@ export class ListaComponent implements OnInit {
   controllaArray(){
     if(this.arrayAttivita.length == 0)  console.log("Nessuna attività da mostrare.");
   }
+
   cambiaVisualizzazione(event){
     this.apiConnection.getFilteredList(event.value).subscribe((attivita: Attivita[]) =>{ 
       this.arrayAttivita = attivita;
@@ -136,16 +147,19 @@ export class ListaComponent implements OnInit {
       this.arrayAttivita = null;
     });
   }
+
   aggiornaCounters(){
     this.apiConnection.getCounters().subscribe((counters: any) => {
       this.counters[0] = counters["Non completate"];
       this.counters[1] = counters["Completate"];
       this.counters[2] = counters["Rimosse"];
       this.stringaCounter.value = ("Non completate: " + this.counters[0] + "\nCompletate: " + this.counters[1] + "\nRimosse: " + this.counters[2]);
-    }, 
-    (error: any) => {
+    }, (error: any) => {
       this.router.navigate(['']);
     });
-    
+  }
+
+  apriModificaAttivita(attivita: Attivita) {
+    this.clickEdit.emit(attivita);
   }
 }

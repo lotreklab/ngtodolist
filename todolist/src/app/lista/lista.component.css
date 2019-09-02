@@ -16,8 +16,9 @@
 #campoVisualizzazione{
     margin-right: 20%px;
 }
+
 .containerAttivita{
-    margin: auto;
+    margin: 20px auto;
     width: 70%;
     position: relative;
 }
